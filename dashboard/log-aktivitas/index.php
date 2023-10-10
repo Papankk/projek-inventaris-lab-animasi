@@ -238,10 +238,29 @@ if ($_SESSION['logged_in']) {
                                                 $no = 1;
                                                 $query_select = mysqli_query($connect, "SELECT * FROM tbl_log");
                                                 while ($row = mysqli_fetch_assoc($query_select)) {
+                                                    $username = $row['id_user'];
+                                                    $query_user = mysqli_query($connect, "SELECT * FROM tbl_user WHERE username = '$username'");
+                                                    $user = mysqli_fetch_assoc($query_user);
                                                 ?>
                                                     <tr>
                                                         <td><?= $no++ ?></td>
-                                                        <td><?= $row['id_user'] ?> </td>
+                                                        <td>
+                                                            <div class="d-flex flex-wrap">
+                                                                <div class="avatar me-3">
+                                                                    <img src="../../assets/img/<?= $user['foto_profil'] ?>" alt="Avatar" class="rounded-circle">
+                                                                </div>
+                                                                <div>
+                                                                    <h6 class="mb-0"><?= $row['id_user'] ?></h6>
+                                                                    <span><?php
+                                                                            if ($user['role'] == "0") {
+                                                                                echo "Admin";
+                                                                            } elseif ($user['role'] == "1") {
+                                                                                echo "Super Admin";
+                                                                            }
+                                                                            ?></span>
+                                                                </div>
+                                                            </div>
+                                                        </td>
                                                         <td><?= $row['aktivitas'] ?></td>
                                                         <td><?= $row['waktu'] ?></td>
                                                     </tr>

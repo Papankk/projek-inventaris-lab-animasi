@@ -154,7 +154,7 @@ if ($_SESSION['logged_in']) {
                             <!-- Search -->
                             <div class="navbar-nav align-items-center">
                                 <div class="nav-item d-flex align-items-center">
-                                    Edit Profil
+                                    Master Setting
                                 </div>
                             </div>
                             <!-- /Search -->
@@ -197,7 +197,7 @@ if ($_SESSION['logged_in']) {
                                         if ($data['role'] == "1") {
                                         ?>
                                             <li>
-                                                <a class="dropdown-item" href="master-setting/">
+                                                <a class="dropdown-item" href="../master-setting/">
                                                     <i class="bx bx-cog me-2"></i>
                                                     <span class="align-middle">Master Setting</span>
                                                 </a>
