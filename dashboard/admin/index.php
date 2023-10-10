@@ -5,6 +5,11 @@ session_start();
 $username = $_SESSION['username'];
 $result = mysqli_query($connect, "SELECT * FROM tbl_user WHERE username = '$username'");
 $data = mysqli_fetch_assoc($result);
+
+if ($data['role'] == "0") {
+    header("location: ../../404.html");
+}
+
 if ($_SESSION['logged_in']) {
 ?>
     <html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default" data-assets-path="../sneat/assets/" data-template="vertical-menu-template-free">
@@ -95,33 +100,37 @@ if ($_SESSION['logged_in']) {
                                 <div data-i18n="Basic">Peminjaman</div>
                             </a>
                         </li>
-                        <li class="menu-item">
-                            <a href="../pengajuan/" class="menu-link">
-                                <i class="menu-icon tf-icons bx bx-chevrons-right"></i>
-                                <div data-i18n="Basic">Pengajuan</div>
-                            </a>
-                        </li>
-                        <li class="menu-header small text-uppercase"><span class="menu-header-text">Aktivitas</span></li>
-                        <li class="menu-item">
-                            <a href="../log-aktivitas/" class="menu-link">
-                                <i class="menu-icon tf-icons bx bx-shuffle"></i>
-                                <div data-i18n="Basic">Log Aktivitas</div>
-                            </a>
-                        </li>
-                        <li class="menu-header small text-uppercase"><span class="menu-header-text">SISWA</span></li>
-                        <li class="menu-item">
-                            <a href="../siswa/" class="menu-link">
-                                <i class="menu-icon tf-icons bx bx-user"></i>
-                                <div data-i18n="Basic">Manage Siswa</div>
-                            </a>
-                        </li>
-                        <li class="menu-header small text-uppercase"><span class="menu-header-text">Admin</span></li>
-                        <li class="menu-item active">
-                            <a href="#" class="menu-link">
-                                <i class="menu-icon tf-icons bx bx-user-circle"></i>
-                                <div data-i18n="Basic">Manage Admin</div>
-                            </a>
-                        </li>
+                        <?php
+                        if ($data['role'] == "1") {
+                        ?>
+                            <li class="menu-item">
+                                <a href="../pengajuan/" class="menu-link">
+                                    <i class="menu-icon tf-icons bx bx-chevrons-right"></i>
+                                    <div data-i18n="Basic">Pengajuan</div>
+                                </a>
+                            </li>
+                            <li class="menu-header small text-uppercase"><span class="menu-header-text">Aktivitas</span></li>
+                            <li class="menu-item">
+                                <a href="../log-aktivitas/" class="menu-link">
+                                    <i class="menu-icon tf-icons bx bx-shuffle"></i>
+                                    <div data-i18n="Basic">Log Aktivitas</div>
+                                </a>
+                            </li>
+                            <li class="menu-header small text-uppercase"><span class="menu-header-text">SISWA</span></li>
+                            <li class="menu-item">
+                                <a href="../siswa/" class="menu-link">
+                                    <i class="menu-icon tf-icons bx bx-user"></i>
+                                    <div data-i18n="Basic">Manage Siswa</div>
+                                </a>
+                            </li>
+                            <li class="menu-header small text-uppercase"><span class="menu-header-text">Admin</span></li>
+                            <li class="menu-item active">
+                                <a href="#" class="menu-link">
+                                    <i class="menu-icon tf-icons bx bx-user-circle"></i>
+                                    <div data-i18n="Basic">Manage Admin</div>
+                                </a>
+                            </li>
+                        <?php } ?>
                     </ul>
                 </aside>
                 <!-- / Menu -->
@@ -180,12 +189,18 @@ if ($_SESSION['logged_in']) {
                                                 <span class="align-middle">Edit Profile</span>
                                             </a>
                                         </li>
-                                        <li>
-                                            <a class="dropdown-item" href="../master-setting/">
-                                                <i class="bx bx-cog me-2"></i>
-                                                <span class="align-middle">Master Setting</span>
-                                            </a>
-                                        </li>
+                                        <?php
+                                        if ($data['role'] == "1") {
+                                        ?>
+                                            <li>
+                                                <a class="dropdown-item" href="master-setting/">
+                                                    <i class="bx bx-cog me-2"></i>
+                                                    <span class="align-middle">Master Setting</span>
+                                                </a>
+                                            </li>
+                                        <?php
+                                        }
+                                        ?>
                                         <li>
                                             <a class="dropdown-item" href="../../logout.php">
                                                 <i class="bx bx-power-off me-2"></i>
@@ -248,6 +263,7 @@ if ($_SESSION['logged_in']) {
                                                         <th>#</th>
                                                         <th>Username</th>
                                                         <th>Foto Profil</th>
+                                                        <th>Role</th>
                                                         <th class="text-center">Action</th>
                                                     </tr>
                                                 </thead>
@@ -260,12 +276,49 @@ if ($_SESSION['logged_in']) {
                                                         echo '<td>' . $no++ . '</td>';
                                                         echo '<td>' . $row['username'] . '</td>';
                                                         echo '<td class = ""> <img src="../../assets/img/' . $row['foto_profil'] . '" alt class="w-px-40 h-auto rounded-circle" /> </td>';
+                                                        if ($row['role'] == "0") {
+                                                            echo '<td> Admin </td>';
+                                                        } elseif ($row['role'] == "1") {
+                                                            echo '<td> Super Admin </td>';
+                                                        }
                                                     ?>
                                                         <td>
                                                             <div class="d-grid gap-2 col-5 mx-auto">
+                                                                <a href="#" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#modaledit<?= $no; ?>"><i class="bi bi-pen"></i> Edit Role</a>
                                                                 <a href="#" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#modaldelete<?= $no; ?>"><i class="bi bi-trash"></i> Delete</a>
                                                             </div>
                                                         </td>
+
+                                                        <!-- Modal Edit -->
+                                                        <div class="modal fade" id="modaledit<?= $no ?>" tabindex="-1" aria-labelledby="modaleditLabel" aria-hidden="true">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="modaleditLabel">Edit <?= $row['username'] ?></h5>
+                                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <form method="post" action="update.php">
+                                                                            <label class="form-label">Role</label>
+                                                                            <div class="input-group mb-3">
+                                                                                <span class="input-group-text cursor-pointer"><i class="bx bx-lock-alt"></i></span>
+                                                                                <select name="role" id="role" class="form-select">
+                                                                                    <option value="0" <?= ($row['role'] == '0') ? 'selected' : ''; ?>>Admin</option>
+                                                                                    <option value="1" <?= ($row['role'] == '1') ? 'selected' : ''; ?>>Super Admin</option>
+                                                                                </select>
+                                                                            </div>
+                                                                            <input type="hidden" name="username" id="username" value="<?= $row['username'] ?>">
+                                                                            <div class="modal-footer">
+                                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                                <button name="submitedit" type="submit" class="btn btn-primary">Confirm</button>
+                                                                            </div>
+                                                                    </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- / Modal Edit -->
 
                                                         <!-- Modal Delete -->
                                                         <div class="modal fade" id="modaldelete<?= $no ?>" tabindex="-1" aria-labelledby="modaldeleteLabel" aria-hidden="true">
@@ -348,6 +401,14 @@ if ($_SESSION['logged_in']) {
                                                         <input type="password" name="pass2" class="form-control" id="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="basic-default-password" required />
                                                     </div>
                                                 </div>
+                                            </div>
+                                            <label class="form-label">Role</label>
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text cursor-pointer"><i class="bx bx-lock-alt"></i></span>
+                                                <select name="role" id="role" class="form-select">
+                                                    <option value="0">Admin</option>
+                                                    <option value="1">Super Admin</option>
+                                                </select>
                                             </div>
                                     </div>
                                     <div class="modal-footer">

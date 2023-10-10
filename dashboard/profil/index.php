@@ -95,33 +95,37 @@ if ($_SESSION['logged_in']) {
                                 <div data-i18n="Basic">Peminjaman</div>
                             </a>
                         </li>
-                        <li class="menu-item">
-                            <a href="../pengajuan/" class="menu-link">
-                                <i class="menu-icon tf-icons bx bx-chevrons-right"></i>
-                                <div data-i18n="Basic">Pengajuan</div>
-                            </a>
-                        </li>
-                        <li class="menu-header small text-uppercase"><span class="menu-header-text">Aktivitas</span></li>
-                        <li class="menu-item">
-                            <a href="../log-aktivitas/" class="menu-link">
-                                <i class="menu-icon tf-icons bx bx-shuffle"></i>
-                                <div data-i18n="Basic">Log Aktivitas</div>
-                            </a>
-                        </li>
-                        <li class="menu-header small text-uppercase"><span class="menu-header-text">SISWA</span></li>
-                        <li class="menu-item">
-                            <a href="../siswa/" class="menu-link">
-                                <i class="menu-icon tf-icons bx bx-user"></i>
-                                <div data-i18n="Basic">Manage Siswa</div>
-                            </a>
-                        </li>
-                        <li class="menu-header small text-uppercase"><span class="menu-header-text">Admin</span></li>
-                        <li class="menu-item">
-                            <a href="../admin/" class="menu-link">
-                                <i class="menu-icon tf-icons bx bx-user-circle"></i>
-                                <div data-i18n="Basic">Manage Admin</div>
-                            </a>
-                        </li>
+                        <?php
+                        if ($data['role'] == "1") {
+                        ?>
+                            <li class="menu-item">
+                                <a href="../pengajuan/" class="menu-link">
+                                    <i class="menu-icon tf-icons bx bx-chevrons-right"></i>
+                                    <div data-i18n="Basic">Pengajuan</div>
+                                </a>
+                            </li>
+                            <li class="menu-header small text-uppercase"><span class="menu-header-text">Aktivitas</span></li>
+                            <li class="menu-item">
+                                <a href="../log-aktivitas/" class="menu-link">
+                                    <i class="menu-icon tf-icons bx bx-shuffle"></i>
+                                    <div data-i18n="Basic">Log Aktivitas</div>
+                                </a>
+                            </li>
+                            <li class="menu-header small text-uppercase"><span class="menu-header-text">SISWA</span></li>
+                            <li class="menu-item">
+                                <a href="../siswa/" class="menu-link">
+                                    <i class="menu-icon tf-icons bx bx-user"></i>
+                                    <div data-i18n="Basic">Manage Siswa</div>
+                                </a>
+                            </li>
+                            <li class="menu-header small text-uppercase"><span class="menu-header-text">Admin</span></li>
+                            <li class="menu-item">
+                                <a href="../admin/" class="menu-link">
+                                    <i class="menu-icon tf-icons bx bx-user-circle"></i>
+                                    <div data-i18n="Basic">Manage Admin</div>
+                                </a>
+                            </li>
+                        <?php } ?>
                     </ul>
                 </aside>
                 <!-- / Menu -->
@@ -180,12 +184,18 @@ if ($_SESSION['logged_in']) {
                                                 <span class="align-middle">Edit Profile</span>
                                             </a>
                                         </li>
-                                        <li>
-                                            <a class="dropdown-item" href="../master-setting/">
-                                                <i class="bx bx-cog me-2"></i>
-                                                <span class="align-middle">Master Setting</span>
-                                            </a>
-                                        </li>
+                                        <?php
+                                        if ($data['role'] == "1") {
+                                        ?>
+                                            <li>
+                                                <a class="dropdown-item" href="master-setting/">
+                                                    <i class="bx bx-cog me-2"></i>
+                                                    <span class="align-middle">Master Setting</span>
+                                                </a>
+                                            </li>
+                                        <?php
+                                        }
+                                        ?>
                                         <li>
                                             <a class="dropdown-item" href="../../logout.php">
                                                 <i class="bx bx-power-off me-2"></i>

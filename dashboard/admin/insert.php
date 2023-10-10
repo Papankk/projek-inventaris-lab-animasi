@@ -5,6 +5,7 @@ include "../../koneksi.php";
 $username = $_POST["username"];
 $password1 = $_POST["pass1"];
 $password2 = $_POST["pass2"];
+$role = $_POST['role'];
 
 $query = "SELECT * FROM tbl_user WHERE username = '$username'";
 $result = mysqli_query($connect, $query);
@@ -18,7 +19,7 @@ if (mysqli_num_rows($result) > 0) {
     if ($password1 == $password2) {
         $pengacak = "PsoaiS812Sp'";
         $enkripsi = md5($pengacak . md5($password1));
-        $insert_query = "INSERT INTO tbl_user (id_user, username, password) VALUES('' ,'$username', '$enkripsi')";
+        $insert_query = "INSERT INTO tbl_user (id_user, role, username, password) VALUES('' ,'$role', '$username', '$enkripsi')";
         $hasil = mysqli_query($connect, $insert_query);
 
         if ($hasil) {
