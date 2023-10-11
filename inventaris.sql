@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 06, 2023 at 07:57 AM
+-- Generation Time: Oct 11, 2023 at 09:02 AM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -37,17 +37,6 @@ CREATE TABLE `tbl_barang` (
   `status` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `tbl_barang`
---
-
-INSERT INTO `tbl_barang` (`id_barang`, `nama_barang`, `id_kategori`, `sumber`, `deskripsi`, `kondisi_sebelum`, `status`) VALUES
-(23, 'Kabel VGA-1', 1, 'gatau', 'gatau', 'Baik', 'baik'),
-(24, 'Kabel VGA-2', 1, 'gatau', 'gatau', 'Baik', 'baik'),
-(25, 'Kabel VGA-3', 1, 'gatau', 'gatau', 'Baik', 'baik'),
-(26, 'Kabel HDMI-1', 1, 'Jalan', 'Keren', 'Baik', 'S'),
-(27, 'Kabel HDMI-2', 1, 'Jalan', 'Keren', 'Baik', 'S');
-
 -- --------------------------------------------------------
 
 --
@@ -59,13 +48,6 @@ CREATE TABLE `tbl_jdl_pengajuan` (
   `nama` varchar(100) NOT NULL,
   `nodok` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `tbl_jdl_pengajuan`
---
-
-INSERT INTO `tbl_jdl_pengajuan` (`id_judul`, `nama`, `nodok`) VALUES
-(25, 'PENGAJUAN ALAT/BAHAN - TAHUN AJARAN BARU 2020/2023', 'CM-7.4-1/SP/03');
 
 -- --------------------------------------------------------
 
@@ -84,9 +66,7 @@ CREATE TABLE `tbl_kategori` (
 
 INSERT INTO `tbl_kategori` (`id_kategori`, `nama_kategori`) VALUES
 (1, 'Bahan'),
-(2, 'Vitamin'),
-(8, 'Alat'),
-(9, 'pakan');
+(8, 'Alat');
 
 -- --------------------------------------------------------
 
@@ -107,8 +87,10 @@ CREATE TABLE `tbl_log` (
 --
 
 INSERT INTO `tbl_log` (`id_log`, `id_user`, `aktivitas`, `waktu`, `is_deleted`) VALUES
-(192, 'Admin1', 'Mengubah master setting', '2023-October-06 12:50:18', 0),
-(193, 'Admin1', 'Mengubah master setting', '2023-October-06 12:50:22', 0);
+(224, 'Admin1', 'Delete data <b>ASD-4</b> di tabel <b>Barang<b>', '2023-October-11 13:37:38', 0),
+(225, 'Admin1', 'Delete data <b>ASD-3</b> di tabel <b>Barang<b>', '2023-October-11 13:37:40', 0),
+(226, 'Admin1', 'Delete data <b>ASD-2</b> di tabel <b>Barang<b>', '2023-October-11 13:37:41', 0),
+(227, 'Admin1', 'Delete data <b>ASD-1</b> di tabel <b>Barang<b>', '2023-October-11 13:37:43', 0);
 
 -- --------------------------------------------------------
 
@@ -495,6 +477,7 @@ INSERT INTO `tbl_siswa` (`id_siswa`, `nama_siswa`, `kelas`, `jurusan`, `abjad`, 
 
 CREATE TABLE `tbl_user` (
   `id_user` int(11) NOT NULL,
+  `role` varchar(1) NOT NULL,
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `foto_profil` varchar(255) NOT NULL DEFAULT 'default.png'
@@ -504,8 +487,8 @@ CREATE TABLE `tbl_user` (
 -- Dumping data for table `tbl_user`
 --
 
-INSERT INTO `tbl_user` (`id_user`, `username`, `password`, `foto_profil`) VALUES
-(32, 'Admin1', 'cefdf4d318ba7a86c0f1dde04d57f6f1', '944607389_qrcode.png');
+INSERT INTO `tbl_user` (`id_user`, `role`, `username`, `password`, `foto_profil`) VALUES
+(32, '1', 'Admin1', 'cefdf4d318ba7a86c0f1dde04d57f6f1', '944607389_qrcode.png');
 
 --
 -- Indexes for dumped tables
@@ -555,7 +538,7 @@ ALTER TABLE `tbl_user`
 -- AUTO_INCREMENT for table `tbl_barang`
 --
 ALTER TABLE `tbl_barang`
-  MODIFY `id_barang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id_barang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT for table `tbl_jdl_pengajuan`
@@ -573,19 +556,19 @@ ALTER TABLE `tbl_kategori`
 -- AUTO_INCREMENT for table `tbl_log`
 --
 ALTER TABLE `tbl_log`
-  MODIFY `id_log` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=194;
+  MODIFY `id_log` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=228;
 
 --
 -- AUTO_INCREMENT for table `tbl_pengajuan`
 --
 ALTER TABLE `tbl_pengajuan`
-  MODIFY `id_pengajuan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id_pengajuan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `tbl_user`
 --
 ALTER TABLE `tbl_user`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
