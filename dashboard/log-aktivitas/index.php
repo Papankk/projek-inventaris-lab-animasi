@@ -251,13 +251,15 @@ if ($_SESSION['logged_in']) {
                                                                 </div>
                                                                 <div>
                                                                     <h6 class="mb-0"><?= $row['id_user'] ?></h6>
-                                                                    <span><?php
-                                                                            if ($user['role'] == "0") {
-                                                                                echo "Admin";
-                                                                            } elseif ($user['role'] == "1") {
-                                                                                echo "Super Admin";
-                                                                            }
-                                                                            ?></span>
+                                                                    <span>
+                                                                        <?php
+                                                                        if ($user['role'] == "0") {
+                                                                            echo "Admin";
+                                                                        } elseif ($user['role'] == "1") {
+                                                                            echo "Super Admin";
+                                                                        }
+                                                                        ?>
+                                                                    </span>
                                                                 </div>
                                                             </div>
                                                         </td>

@@ -22,7 +22,7 @@ if (isset($_POST['submitinsert'])) {
         $_SESSION['title'] = "Sukses!";
         $_SESSION['text'] = "Data berhasil di-insert!";
 
-        $_SESSION['aktivitas'] = "Input data <b>$i x " .  $_POST['nama_barang'] . "</b> di tabel <b>Barang<b>";
+        $_SESSION['aktivitas'] = "Input data <b>" . $i - 1 . " x " .  $_POST['nama_barang'] . "</b> di tabel <b>Barang<b>";
         date_default_timezone_set("Asia/Jakarta");
         $_SESSION['waktu'] = date("Y-F-d H:i:s");
         $_SESSION['location'] = "barang/";

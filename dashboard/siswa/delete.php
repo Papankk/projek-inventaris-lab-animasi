@@ -20,7 +20,7 @@ if ($queryupdate) {
     $_SESSION['aktivitas'] = "Delete data <b>$nama_barang</b> di tabel <b>Barang<b>";
     date_default_timezone_set("Asia/Jakarta");
     $_SESSION['waktu'] = date("Y-F-d H:i:s");
-    $_SESSION['location'] = "barang/";
+    $_SESSION['location'] = "siswa/";
 
     header("Location: ../log-aktivitas/insert.php");
 } else {
