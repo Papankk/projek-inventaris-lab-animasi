@@ -84,7 +84,21 @@ if ($_SESSION['logged_in']) {
                                 <div data-i18n="Analytics">Dashboard</div>
                             </a>
                         </li>
-
+                        <li class="menu-header small text-uppercase">
+                            <span class="menu-header-text">Data Bahan</span>
+                        </li>
+                        <li class="menu-item">
+                            <a href="../bahan/" class="menu-link">
+                                <i class="menu-icon tf-icons bx bx-package"></i>
+                                <div data-i18n="Basic">Bahan</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="../distribusi-bahan/" class="menu-link">
+                                <i class="menu-icon tf-icons bx bx-transfer-alt"></i>
+                                <div data-i18n="Basic">Distribusi Bahan</div>
+                            </a>
+                        </li>
                         <li class="menu-header small text-uppercase">
                             <span class="menu-header-text">Data Barang</span>
                         </li>

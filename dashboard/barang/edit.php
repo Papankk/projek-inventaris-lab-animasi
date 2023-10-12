@@ -24,10 +24,10 @@ if (isset($_POST['submit'])) {
         $_SESSION['title'] = "Sukses!";
         $_SESSION['text'] = "Data berhasil di-edit!";
 
-        $_SESSION['aktivitas'] = "Edit data <b>$nama_siswa</b> di tabel <b>Siswa<b>";
+        $_SESSION['aktivitas'] = "Edit data <b>$nama_barang</b> di tabel <b>Barang<b>";
         date_default_timezone_set("Asia/Jakarta");
         $_SESSION['waktu'] = date("Y-F-d H:i:s");
-        $_SESSION['location'] = "siswa/";
+        $_SESSION['location'] = "barang/";
 
         header("Location: ../log-aktivitas/insert.php");
     } else {
