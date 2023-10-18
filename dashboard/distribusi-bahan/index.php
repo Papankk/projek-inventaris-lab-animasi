@@ -6,10 +6,6 @@ $username = $_SESSION['username'];
 $result = mysqli_query($connect, "SELECT * FROM tbl_user WHERE username = '$username'");
 $data = mysqli_fetch_assoc($result);
 
-if ($data['role'] == "0") {
-    header("location: ../../404.html");
-}
-
 if ($_SESSION['logged_in']) {
 ?>
     <html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default" data-assets-path="../sneat/assets/" data-template="vertical-menu-template-free">
@@ -18,7 +14,7 @@ if ($_SESSION['logged_in']) {
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-        <title>Dashboard - Manage Siswa</title>
+        <title>Dashboard - Manage Distribusi Bahan</title>
 
         <meta name="description" content="" />
 
@@ -97,8 +93,8 @@ if ($_SESSION['logged_in']) {
                                 <div data-i18n="Basic">Bahan</div>
                             </a>
                         </li>
-                        <li class="menu-item">
-                            <a href="../distribusi-bahan/" class="menu-link">
+                        <li class="menu-item active">
+                            <a href="#" class="menu-link">
                                 <i class="menu-icon tf-icons bx bx-transfer-alt"></i>
                                 <div data-i18n="Basic">Distribusi Bahan</div>
                             </a>
@@ -135,8 +131,8 @@ if ($_SESSION['logged_in']) {
                                 </a>
                             </li>
                             <li class="menu-header small text-uppercase"><span class="menu-header-text">SISWA</span></li>
-                            <li class="menu-item active">
-                                <a href="#" class="menu-link">
+                            <li class="menu-item">
+                                <a href="../siswa/" class="menu-link">
                                     <i class="menu-icon tf-icons bx bx-user"></i>
                                     <div data-i18n="Basic">Manage Siswa</div>
                                 </a>
@@ -168,7 +164,7 @@ if ($_SESSION['logged_in']) {
                             <!-- Search -->
                             <div class="navbar-nav align-items-center">
                                 <div class="nav-item d-flex align-items-center">
-                                    Menu Siswa
+                                    Menu Distribusi Bahan
                                 </div>
                             </div>
                             <!-- /Search -->
@@ -278,34 +274,40 @@ if ($_SESSION['logged_in']) {
                                             <table id="tabel-crud" class="table table-striped">
                                                 <thead>
                                                     <tr>
-                                                        <th class="col-1" scope="col">#</th>
-                                                        <th class="col-4" scope="col">Nama</th>
-                                                        <th class="col-2" scope="col">Kelas</th>
-                                                        <th class="col-2" scope="col">No.Identitas</th>
-                                                        <th class="col-2" scope="col">Action</th>
+                                                        <th scope="col">#</th>
+                                                        <th scope="col">Nama Pengambil</th>
+                                                        <th scope="col">Jabatan</th>
+                                                        <th scope="col">Nama Bahan</th>
+                                                        <th scope="col">Jumlah</th>
+                                                        <th scope="col">Satuan</th>
+                                                        <th scope="col">Tanggal Pengambilan</th>
+                                                        <th scope="col">Keterangan</th>
+                                                        <th scope="col">Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <?php
                                                     $no = 1;
-                                                    $sql = "SELECT * FROM tbl_siswa";
-                                                    $queryview = mysqli_query($connect, $sql);
-
+                                                    $queryview = mysqli_query($connect, "SELECT * FROM tbl_distribusi")
+                                                        or die(mysqli_error($connect));
                                                     if (!$queryview) {
                                                         die('Query failed: ' . mysqli_error($connect));
                                                     }
-
                                                     while ($row = mysqli_fetch_assoc($queryview)) :
                                                         echo "<tr>";
-                                                        echo '<td scope="row">' . $no++ . "</td>";
-                                                        echo "<td>" . $row['nama_siswa'] . "</td>";
-                                                        echo "<td>" . $row['kelas'] . "\n" .  $row['jurusan'] . "\n" . $row['abjad'] . "</td>";
-                                                        echo "<td>" . $row['no_identitas'] . "</td>";
+                                                        echo '<td>' . $no++ . "</td>";
+                                                        echo "<td>" . $row['nama_pengambil'] . "</td>";
+                                                        echo "<td>" . $row['jabatan'] . "</td>";
+                                                        echo "<td>" . $row['nama_bahan'] . "</td>";
+                                                        echo "<td>" . $row['jumlah'] . "</td>";
+                                                        echo "<td>" . $row['satuan'] . "</td>";
+                                                        echo "<td>" . $row['tgl_pengambilan'] . "</td>";
+                                                        echo "<td>" . $row['keterangan'] . "</td>";
                                                     ?>
                                                         <td>
                                                             <div class="d-grid gap-2 col-5">
-                                                                <a href="#" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modal<?= $no; ?>"><i class="bi bi-pencil-square"></i> Edit</a>
-                                                                <a href="#" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#modaldelete<?= $no; ?>"><i class="bi bi-trash"></i> Delete</a>
+                                                                <a href="#" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modaldelete<?= $no ?>">Cetak</a>
+                                                                <a href="#" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#modaldelete<?= $no ?>">Delete</a>
                                                             </div>
                                                         </td>
                                                         </tr>
@@ -317,87 +319,18 @@ if ($_SESSION['logged_in']) {
                                                                     <div class="modal-header">
                                                                         <h5 class="modal-title" id="modaldelete<?= $no; ?>">Delete</h5>
                                                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                                                                        </button>
                                                                     </div>
                                                                     <div class="modal-body">
                                                                         <form name="contact-form" action="delete.php" method="post">
 
-                                                                            <p>Yakin untuk menghapus data dari Nama : <?= $row['nama_siswa'] ?> ?</p>
-                                                                            <input type="hidden" name="id_siswa" id="id_siswa" value="<?= $row['id_siswa'] ?>">
+                                                                            <p>Yakin untuk menghapus data Distribusi Bahan dari : <?= $row['nama_pengambil'] ?> ?</p>
+                                                                            <input type="hidden" name="id_distribusi" id="id_distribusi" value="<?= $row['id_distribusi'] ?>">
                                                                     </div>
                                                                     <div class="modal-footer">
                                                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                                                         <button name="submitinsert" type="submit" onclick="submitForm()" class="btn btn-danger">Delete</button>
                                                                         </form>
                                                                     </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-
-                                                        <!-- Modal Edit -->
-                                                        <div class="modal fade" id="modal<?= $no; ?>" tabindex="-1" role="dialog" aria-labelledby="modal<?= $no; ?>LongTitle" aria-hidden="true">
-                                                            <div class="modal-dialog" role="document">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <h5 class="modal-title" id="modal<?= $no; ?>">Edit <?= $row['nama_siswa'] ?></h5>
-                                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                                                                        </button>
-                                                                    </div>
-                                                                    <div class="modal-body">
-                                                                        <form name="edit-form" action="edit.php" method="post">
-                                                                            <?php
-                                                                            $id = $row['id_siswa'];
-                                                                            $query_edit = "SELECT * FROM tbl_siswa WHERE id_siswa='$id'";
-                                                                            $result = mysqli_query($connect, $query_edit);
-                                                                            while ($row_edit = mysqli_fetch_assoc($result)) {
-                                                                            ?>
-                                                                                <div class="form-group">
-                                                                                    <input class="form-control" type="hidden" name="id_siswa" id="edit-id_siswa" value="<?= $row['id_siswa'] ?>" required="">
-                                                                                </div>
-                                                                                <div class="form-group">
-                                                                                    <label for="edit-nama_siswa">Nama : </label>
-                                                                                    <input class="form-control" type="text" name="nama_siswa" id="edit-nama_siswa" value="<?= $row['nama_siswa']; ?>" required="">
-                                                                                </div><br>
-                                                                                <div class="form-group">
-                                                                                    <label for="edit-kelas">Kelas:</label>
-                                                                                    <select class="form-select" name="kelas" id="edit-kelas" required="">
-                                                                                        <option value="X" <?= ($row['kelas'] == 'X') ? 'selected' : ''; ?>>X</option>
-                                                                                        <option value="XI" <?= ($row['kelas'] == 'XI') ? 'selected' : ''; ?>>XI</option>
-                                                                                        <option value="XII" <?= ($row['kelas'] == 'XII') ? 'selected' : ''; ?>>XII</option>
-                                                                                    </select>
-                                                                                </div><br>
-                                                                                <div class="form-group">
-                                                                                    <label for="edit-jurusan">Jurusan:</label>
-                                                                                    <select class="form-select" name="jurusan" id="edit-jurusan" required="">
-                                                                                        <option value="Animasi" <?= ($row['jurusan'] == 'Animasi') ? 'selected' : ''; ?>>Animasi</option>
-                                                                                        <option value="DKV" <?= ($row['jurusan'] == 'DKV') ? 'selected' : ''; ?>>DKV</option>
-                                                                                        <option value="Teknik Grafika" <?= ($row['jurusan'] == 'Teknik Grafika') ? 'selected' : ''; ?>>Teknik Grafika</option>
-                                                                                        <option value="Mekatronika" <?= ($row['jurusan'] == 'Mekatronika') ? 'selected' : ''; ?>>Mekatronika</option>
-                                                                                        <option value="Perhotelan" <?= ($row['jurusan'] == 'Perhotelan') ? 'selected' : ''; ?>>Perhotelan</option>
-                                                                                        <option value="RPL" <?= ($row['jurusan'] == 'RPL') ? 'selected' : ''; ?>>RPL</option>
-                                                                                        <option value="TKJ" <?= ($row['jurusan'] == 'TKJ') ? 'selected' : ''; ?>>TKJ</option>
-                                                                                    </select>
-                                                                                </div><br>
-                                                                                <div class="form-group">
-                                                                                    <label for="edit-abjad">Abjad:</label>
-                                                                                    <select class="form-select" name="abjad" id="edit-abjad" required="">
-                                                                                        <option value="A" <?= ($row['abjad'] == 'A') ? 'selected' : ''; ?>>A</option>
-                                                                                        <option value="B" <?= ($row['abjad'] == 'B') ? 'selected' : ''; ?>>B</option>
-                                                                                        <option value="C" <?= ($row['abjad'] == 'C') ? 'selected' : ''; ?>>C</option>
-                                                                                    </select>
-                                                                                </div><br>
-                                                                                <div class="form-group">
-                                                                                    <label for="edit-no_identitas">No.Identitas : </label>
-                                                                                    <input class="form-control" type="text" name="no_identitas" id="edit-no_identitas" value="<?= $row['no_identitas']; ?>" required="">
-                                                                                </div><br>
-                                                                    </div>
-                                                                    <div class="modal-footer">
-                                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                                        <button name="submit" type="submit" onclick="submitEditForm()" class="btn btn-primary">Save changes</button>
-                                                                        </form>
-                                                                    </div>
-                                                                <?php } ?>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -411,70 +344,82 @@ if ($_SESSION['logged_in']) {
                                                         <div class="modal-header">
                                                             <h5 class="modal-title" id="insertModalLongTitle">Insert</h5>
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                                                            </button>
                                                         </div>
                                                         <div class="modal-body">
                                                             <form class="needs-validation" novalidate name="contact-form" action="insert.php" method="post">
-                                                                <div class="form-group">
-                                                                    <input class="form-control" type="hidden" name="id_siswa" id="id_siswa" required="">
-                                                                    <div class="invalid-feedback">
-                                                                        Harus Diisi
+
+                                                                <label class="form-label">Nama Pengambil</label>
+                                                                <div class="input-group mb-3">
+                                                                    <span class="input-group-text cursor-pointer"><i class="bx bx-user"></i></span>
+                                                                    <input type="text" name="nama_pengambil" class="form-control" placeholder="Nama Pengambil" required />
+                                                                </div>
+
+                                                                <label class="form-label">Jabatan</label>
+                                                                <div class="input-group mb-3">
+                                                                    <span class="input-group-text cursor-pointer"><i class="bx bx-award"></i></span>
+                                                                    <input type="text" name="jabatan" class="form-control" placeholder="Jabatan" required />
+                                                                </div>
+
+                                                                <label class="form-label" for="bahan">List Bahan</label>
+                                                                <div class="input-group mb-3">
+                                                                    <span class="input-group-text cursor-pointer"><i class="bx bx-box"></i></span>
+                                                                    <input class="form-control" list="bahan_list" name="bahan" id="bahan" placeholder="Bahan" required="">
+                                                                    <datalist id="bahan_list">
+                                                                        <script>
+                                                                            $(document).ready(function() {
+                                                                                $.ajax({
+                                                                                    type: "POST",
+                                                                                    url: "fetch_bahan.php",
+                                                                                    success: function(response) {
+                                                                                        var studentNames = JSON.parse(response);
+                                                                                        var datalist = document.getElementById('bahan_list');
+
+                                                                                        studentNames.forEach(function(name) {
+                                                                                            var option = document.createElement('option');
+                                                                                            option.value = name;
+                                                                                            datalist.appendChild(option);
+                                                                                        });
+                                                                                    }
+                                                                                });
+                                                                            });
+                                                                        </script>
+                                                                    </datalist>
+                                                                </div>
+
+                                                                <div class="row">
+                                                                    <div class="col-12 col-lg-6">
+                                                                        <label class="form-label">Jumlah</label>
+                                                                        <div class="input-group mb-3">
+                                                                            <span class="input-group-text cursor-pointer"><i class="bx bx-layer"></i></span>
+                                                                            <input type="text" name="jumlah" class="form-control" id="jumlah" placeholder="Jumlah" required />
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-12 col-lg-6">
+                                                                        <label class="form-label">Satuan</label>
+                                                                        <div class="input-group mb-3">
+                                                                            <span class="input-group-text cursor-pointer"><i class="bx bx-box"></i></span>
+                                                                            <input type="text" name="satuan" class="form-control" id="satuan" placeholder="Satuan" required />
+                                                                        </div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="form-group">
-                                                                    <label for="nama_siswa">Siswa : </label>
-                                                                    <input class="form-control" type="text" name="nama_siswa" id="nama_siswa" required="">
-                                                                    <div class="invalid-feedback">
-                                                                        Harus Diisi
-                                                                    </div>
-                                                                </div><br>
-                                                                <div class="form-group">
-                                                                    <label for="kelas">Kelas:</label>
-                                                                    <select class="form-select" name="kelas" id="kelas" required="">
-                                                                        <option value="" disabled selected hidden>--PILIH KELAS--</option>
-                                                                        <option value="X">X</option>
-                                                                        <option value="XI">XI</option>
-                                                                        <option value="XII">XII</option>
-                                                                    </select>
-                                                                    <div class="invalid-feedback">
-                                                                        Harus Diisi
-                                                                    </div>
-                                                                </div><br>
-                                                                <div class="form-group">
-                                                                    <label for="jurusan">Jurusan:</label>
-                                                                    <select class="form-select" name="jurusan" id="jurusan" required="">
-                                                                        <option value="" disabled selected hidden>--PILIH JURUSAN--</option>
-                                                                        <option value="Animasi">Animasi</option>
-                                                                        <option value="DKV">DKV</option>
-                                                                        <option value="Teknik Grafika">Teknik Grafika</option>
-                                                                        <option value="Mekatronika">Mekatronika</option>
-                                                                        <option value="Perhotelan">Perhotelan</option>
-                                                                        <option value="RPL">RPL</option>
-                                                                        <option value="TKJ">TKJ</option>
-                                                                    </select>
-                                                                    <div class="invalid-feedback">
-                                                                        Harus Diisi
-                                                                    </div>
-                                                                </div><br>
-                                                                <div class="form-group">
-                                                                    <label for="abjad">Abjad:</label>
-                                                                    <select class="form-select" name="abjad" id="abjad" required="">
-                                                                        <option value="" disabled selected hidden>--PILIH ABJAD--</option>
-                                                                        <option value="A">A</option>
-                                                                        <option value="B">B</option>
-                                                                        <option value="C">C</option>
-                                                                    </select>
-                                                                    <div class="invalid-feedback">
-                                                                        Harus Diisi
-                                                                    </div>
-                                                                </div><br>
-                                                                <div class="form-group">
-                                                                    <label for="no_identitas">No.Identitas : </label>
-                                                                    <input class="form-control" type="text" name="no_identitas" id="no_identitas" required="">
-                                                                    <div class="invalid-feedback">
-                                                                        Harus Diisi
-                                                                    </div>
-                                                                </div><br>
+
+                                                                <label class="form-label">Tanggal Pengambilan</label>
+                                                                <div class="input-group mb-3">
+                                                                    <span class="input-group-text cursor-pointer"><i class="bx bx-calendar"></i></span>
+                                                                    <input type="date" name="tanggal" class="form-control" id="tanggal" value="<?= date("Y-m-d") ?>" required />
+                                                                </div>
+
+                                                                <label class="form-label">Asal Bahan</label>
+                                                                <div class="input-group mb-3">
+                                                                    <span class="input-group-text cursor-pointer"><i class="bx bx-history"></i></span>
+                                                                    <input type="text" name="asal_bahan" class="form-control" id="asal_bahan" placeholder="Asal Bahan" required />
+                                                                </div>
+
+                                                                <label class="form-label">Keterangan</label>
+                                                                <div class="input-group">
+                                                                    <span class="input-group-text cursor-pointer"><i class="bx bx-note"></i></span>
+                                                                    <textarea class="form-control" name="keterangan" id="keterangan" cols="30" rows="3" placeholder="Keterangan"></textarea>
+                                                                </div>
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -484,6 +429,30 @@ if ($_SESSION['logged_in']) {
                                                     </div>
                                                 </div>
                                             </div>
+
+                                            <script>
+                                                $(document).ready(function() {
+                                                    $('#bahan').change(function() {
+                                                        var selectedName = $(this).val();
+
+                                                        $.ajax({
+                                                            type: "POST",
+                                                            url: "fetch_bahan_info.php",
+                                                            data: {
+                                                                studentName: selectedName
+                                                            },
+                                                            success: function(response) {
+                                                                var studentData = JSON.parse(response);
+                                                                $('#jumlah').val(studentData.jumlah);
+                                                                $('#satuan').val(studentData.satuan);
+                                                                $('#tanggal').val(studentData.tanggal);
+                                                                $('#asal_bahan').val(studentData.asal_bahan);
+                                                                $('#keterangan').val(studentData.keterangan);
+                                                            }
+                                                        });
+                                                    });
+                                                });
+                                            </script>
 
                                             <script>
                                                 let forms = document.querySelectorAll(".needs-validation");
@@ -505,7 +474,6 @@ if ($_SESSION['logged_in']) {
                                                     }
                                                 });
                                             </script>
-
                                         </div>
                                     </div>
                                 </div>
@@ -514,93 +482,26 @@ if ($_SESSION['logged_in']) {
 
                         <!-- / Content -->
 
-
-                        <!-- Modal Insert -->
-                        <div class="modal fade" id="modalInsert" tabindex="-1" aria-labelledby="modalInsertLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="modalInsertLabel">Tambah Admin</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form method="post" action="insert.php" enctype="multipart/form-data">
-                                            <label class="form-label">Username</label>
-                                            <div class="input-group mb-3">
-                                                <span class="input-group-text cursor-pointer"><i class="bx bx-user"></i></span>
-                                                <input type="text" name="username" class="form-control" placeholder="Username" required />
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-12 col-lg-6">
-                                                    <label class="form-label">Password</label>
-                                                    <div class="input-group mb-3">
-                                                        <span class="input-group-text cursor-pointer"><i class="bx bx-key"></i></span>
-                                                        <input type="password" name="pass1" class="form-control" id="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="basic-default-password" required />
-                                                        <span class="input-group-text" onclick="password_show_hide();">
-                                                            <i class="bx bx-hide d-none" id="hide"></i>
-                                                            <i class="bx bx-show" id="show"></i>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12 col-lg-6">
-                                                    <label class="form-label">Konfirmasi Password</label>
-                                                    <div class="input-group mb-3">
-                                                        <span class="input-group-text cursor-pointer"><i class="bx bx-key"></i></span>
-                                                        <input type="password" name="pass2" class="form-control" id="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="basic-default-password" required />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button name="submit" type="submit" class="btn btn-primary">Save changes</button>
-                                    </div>
+                        <!-- Footer -->
+                        <footer class="content-footer footer bg-footer-theme">
+                            <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
+                                <div class="mb-2 mb-md-0">
+                                    © Powered By <b>Sneat</b>
                                 </div>
-                                </form>
                             </div>
-                        </div>
-                        <!-- / Modal Insert -->
+                        </footer>
+                        <!-- / Footer -->
+
+
+                        <div class="content-backdrop fade"></div>
                     </div>
-
-                    <script>
-                        function password_show_hide() {
-                            var x = document.getElementById("password");
-                            var show = document.getElementById("show");
-                            var hide = document.getElementById("hide");
-                            hide.classList.remove("d-none");
-                            if (x.type === "password") {
-                                x.type = "text";
-                                show.style.display = "none";
-                                hide.style.display = "block";
-                            } else {
-                                x.type = "password";
-                                show.style.display = "block";
-                                hide.style.display = "none";
-                            }
-                        }
-                    </script>
-
-                    <!-- Footer -->
-                    <footer class="content-footer footer bg-footer-theme">
-                        <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
-                            <div class="mb-2 mb-md-0">
-                                © Powered By <b>Sneat</b>
-                            </div>
-                        </div>
-                    </footer>
-                    <!-- / Footer -->
-
-
-                    <div class="content-backdrop fade"></div>
+                    <!-- Content wrapper -->
                 </div>
-                <!-- Content wrapper -->
+                <!-- / Layout page -->
             </div>
-            <!-- / Layout page -->
-        </div>
 
-        <!-- Overlay -->
-        <div class="layout-overlay layout-menu-toggle"></div>
+            <!-- Overlay -->
+            <div class="layout-overlay layout-menu-toggle"></div>
         </div>
         <!-- / Layout wrapper -->
 
@@ -622,9 +523,6 @@ if ($_SESSION['logged_in']) {
 
         <!-- Page JS -->
         <script src="../sneat/assets/js/dashboards-analytics.js"></script>
-
-        <!-- Place this tag in your head or just before your close body tag. -->
-        <script async defer src="https://buttons.github.io/buttons.js"></script>
 
     </body>
 

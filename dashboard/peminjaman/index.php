@@ -164,7 +164,7 @@ if ($_SESSION['logged_in']) {
                             <!-- Search -->
                             <div class="navbar-nav align-items-center">
                                 <div class="nav-item d-flex align-items-center">
-                                    Menu Admin
+                                    Menu Peminjaman
                                 </div>
                             </div>
                             <!-- /Search -->

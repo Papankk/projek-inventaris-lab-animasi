@@ -97,7 +97,7 @@ if ($_SESSION['logged_in']) {
                             <span class="menu-header-text">Data Barang</span>
                         </li>
                         <li class="menu-item">
-                            <a href="#" class="menu-link">
+                            <a href="../barang/" class="menu-link">
                                 <i class="menu-icon tf-icons bx bx-package"></i>
                                 <div data-i18n="Basic">Barang</div>
                             </a>
@@ -483,93 +483,26 @@ if ($_SESSION['logged_in']) {
 
                         <!-- / Content -->
 
-
-                        <!-- Modal Insert -->
-                        <div class="modal fade" id="modalInsert" tabindex="-1" aria-labelledby="modalInsertLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="modalInsertLabel">Tambah Admin</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form method="post" action="insert.php" enctype="multipart/form-data">
-                                            <label class="form-label" class="form-label">Username</label>
-                                            <div class="input-group mb-3">
-                                                <span class="input-group-text cursor-pointer"><i class="bx bx-user"></i></span>
-                                                <input type="text" name="username" class="form-control" placeholder="Username" required />
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-12 col-lg-6">
-                                                    <label class="form-label" class="form-label">Password</label>
-                                                    <div class="input-group mb-3">
-                                                        <span class="input-group-text cursor-pointer"><i class="bx bx-key"></i></span>
-                                                        <input type="password" name="pass1" class="form-control" id="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="basic-default-password" required />
-                                                        <span class="input-group-text" onclick="password_show_hide();">
-                                                            <i class="bx bx-hide d-none" id="hide"></i>
-                                                            <i class="bx bx-show" id="show"></i>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12 col-lg-6">
-                                                    <label class="form-label" class="form-label">Konfirmasi Password</label>
-                                                    <div class="input-group mb-3">
-                                                        <span class="input-group-text cursor-pointer"><i class="bx bx-key"></i></span>
-                                                        <input type="password" name="pass2" class="form-control" id="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="basic-default-password" required />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button name="submit" type="submit" class="btn btn-primary">Save changes</button>
-                                    </div>
+                        <!-- Footer -->
+                        <footer class="content-footer footer bg-footer-theme">
+                            <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
+                                <div class="mb-2 mb-md-0">
+                                    © Powered By <b>Sneat</b>
                                 </div>
-                                </form>
                             </div>
-                        </div>
-                        <!-- / Modal Insert -->
+                        </footer>
+                        <!-- / Footer -->
+
+
+                        <div class="content-backdrop fade"></div>
                     </div>
-
-                    <script>
-                        function password_show_hide() {
-                            var x = document.getElementById("password");
-                            var show = document.getElementById("show");
-                            var hide = document.getElementById("hide");
-                            hide.classList.remove("d-none");
-                            if (x.type === "password") {
-                                x.type = "text";
-                                show.style.display = "none";
-                                hide.style.display = "block";
-                            } else {
-                                x.type = "password";
-                                show.style.display = "block";
-                                hide.style.display = "none";
-                            }
-                        }
-                    </script>
-
-                    <!-- Footer -->
-                    <footer class="content-footer footer bg-footer-theme">
-                        <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
-                            <div class="mb-2 mb-md-0">
-                                © Powered By <b>Sneat</b>
-                            </div>
-                        </div>
-                    </footer>
-                    <!-- / Footer -->
-
-
-                    <div class="content-backdrop fade"></div>
+                    <!-- Content wrapper -->
                 </div>
-                <!-- Content wrapper -->
+                <!-- / Layout page -->
             </div>
-            <!-- / Layout page -->
-        </div>
 
-        <!-- Overlay -->
-        <div class="layout-overlay layout-menu-toggle"></div>
+            <!-- Overlay -->
+            <div class="layout-overlay layout-menu-toggle"></div>
         </div>
         <!-- / Layout wrapper -->
 

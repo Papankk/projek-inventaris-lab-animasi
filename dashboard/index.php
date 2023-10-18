@@ -230,6 +230,24 @@ if ($_SESSION['logged_in']) {
                                         <div class="d-flex align-items-end row">
                                             <div class="col-sm-7">
                                                 <div class="card-body">
+                                                    <h5 class="card-title text-primary">Data Bahan</h5>
+                                                    <p class="mb-4">
+                                                        Jumlah bahan yang terdaftar :
+                                                        <br><span style="font-size: 60px;"><?php $query_view6 = mysqli_query($connect, "SELECT * FROM tbl_bahan");
+                                                                                            echo mysqli_num_rows($query_view6); ?></span>
+                                                    </p>
+
+                                                    <a href="bahan/" class="btn btn-sm btn-outline-primary">Manage <i class="tf-icons bx bx-right-arrow-alt"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 mb-4 order-0">
+                                    <div class="card">
+                                        <div class="d-flex align-items-end row">
+                                            <div class="col-sm-7">
+                                                <div class="card-body">
                                                     <h5 class="card-title text-primary">Data Barang</h5>
                                                     <p class="mb-4">
                                                         Jumlah barang yang terdaftar :
