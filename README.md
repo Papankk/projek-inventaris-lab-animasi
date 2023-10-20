@@ -2,7 +2,7 @@
 
 Website inventaris alat & bahan di Lab Jurusan Animasi SMKN 4 Malang.
 
-Menggunakan Bahasa Pemrograman PHP dengan tampilan bootstrap 5.
+Menggunakan Bahasa Pemrograman PHP dengan tampilan Bootstrap Admin Template [Sneat](https://themeselection.com/item/sneat-bootstrap-html-admin-template/)
 
 ## Authors
 
