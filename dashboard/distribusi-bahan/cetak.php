@@ -9,17 +9,9 @@ function rupiah($angka)
     return $hasil_rupiah;
 }
 
-$id_judul = $_GET['id'];
-
-$nama = $_SESSION['username'];
-
 $query_ttd = mysqli_query($connect, "SELECT * FROM tbl_setting");
 $fetch = mysqli_fetch_assoc($query_ttd);
 
-$query_judul = mysqli_query($connect, "SELECT * FROM tbl_jdl_pengajuan WHERE id_judul = $id_judul");
-$row = mysqli_fetch_assoc($query_judul);
-
-$judul = $row['nama'];
 //Mengaktifkan output buffering
 ob_start();
 ?>
@@ -58,116 +50,61 @@ ob_start();
         </tr>
     </table>
     <hr />
-    <div class="div2" style="margin-left: 562px;">
-        <table class="nodok" style="font-size: 13px;">
-            <tr class="nodok">
-                <td class="nodok">No. Dok</td>
-                <td class="nodok">&nbsp;: <?= $row['nodok'] ?></td>
-            </tr>
-            <tr>
-                <td class="nodok">Revisi</td>
-                <td class="nodok">&nbsp;: 0</td>
-            </tr>
-        </table>
-    </div>
     <div>
         <h3 style="text-align: center">
-            <?= $row['nama'] ?>
+            Data Distribusi Bahan
         </h3>
     </div>
     <div>
-        <table style="font-size: 14px; margin-left: 35px">
+        <table style="font-size: 12px; margin-left: 50px">
             <tr>
-                <td>Bidang Diklat</td>
+                <td>Jurusan / Bagian</td>
                 <td>:</td>
                 <td>Animasi</td>
             </tr>
         </table>
     </div>
     <div>
-        <table class="nodok" style="font-size: 16px">
+        <table class="nodok" style="font-size: 12px">
             <thead>
-                <tr style="background-color: #c0c0c0" class="nodok">
-                    <th class="nodok" rowspan="2" style="width: 20px">No.</th>
-                    <th class="nodok" rowspan="2" style="width: 150px">Nama Alat</th>
-                    <th class="nodok" rowspan="2" style="width: 170px">Spesifikasi</th>
-                    <th class="nodok" rowspan="2" style="width: 70px">Jumlah</th>
-                    <th class="nodok" rowspan="2" style="width: 70px">Satuan</th>
-                    <th class="nodok" rowspan="2" style="width: 150px">
-                        Perkiraan Harga<br />Satuan
-                    </th>
-                    <th class="nodok" rowspan="2" style="width: 170px">
-                        Perkiraan Harga<br />Total
-                    </th>
-                    <th class="nodok" rowspan="2" style="width: 170px">
-                        Bahan digunakan untuk
-                    </th>
-                    <th class="nodok" style="width: 170px; height: 40px">
-                        Prioritas (Urgensi)
-                    </th>
-                </tr>
-                <tr style="background-color: #c0c0c0" class="nodok">
-                    <th class="nodok">(Mendesak, Sedang,<br />Tidak Mendesak)</th>
+                <tr style="padding-top: 5px; padding-bottom: 5px;" class="nodok">
+                    <th class="nodok">No.</th>
+                    <th class="nodok" style="width: 15%;">Nama Pengambil</th>
+                    <th class="nodok" style="width: 12%;">Jabatan</th>
+                    <th class="nodok" style="width: 17%;">Nama Bahan</th>
+                    <th class="nodok">Jumlah</th>
+                    <th class="nodok">Satuan</th>
+                    <th class="nodok">Tanggal Pengambilan</th>
+                    <th class="nodok" style="width: 20%;">Keterangan</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
                 $no = 1;
-                $query_select = mysqli_query($connect, "SELECT * FROM tbl_pengajuan WHERE id_judul = $id_judul");
+                $query_select = mysqli_query($connect, "SELECT * FROM tbl_distribusi");
                 while ($row = mysqli_fetch_assoc($query_select)) {
                 ?>
                     <tr class="nodok">
                         <td style="text-align: center" class="nodok"><?= $no++ ?></td>
-                        <td class="nodok"><?= $row['nama'] ?></td>
-                        <td class="nodok"><?= $row['spek'] ?></td>
+                        <td class="nodok"><?= $row['nama_pengambil'] ?></td>
+                        <td class="nodok"><?= $row['jabatan'] ?></td>
+                        <td style="" class="nodok"><?= $row['nama_bahan'] ?></td>
                         <td style="text-align: center" class="nodok"><?= $row['jumlah'] ?></td>
                         <td style="text-align: center" class="nodok"><?= $row['satuan'] ?></td>
-                        <td class="nodok"><?= rupiah($row['harga']) ?></td>
-                        <td class="nodok"><?= rupiah($row['total_harga']) ?></td>
-                        <td class="nodok"><?= $row['untuk'] ?></td>
-                        <td class="nodok"><?= $row['urgensi'] ?></td>
+                        <td class="nodok"><?= $row['tgl_pengambilan'] ?></td>
+                        <td class="nodok"><?= $row['keterangan'] ?></td>
                     </tr>
                 <?php
                 }
                 ?>
-                <tr class="nodok">
-                    <td style="text-align: center" class="nodok"></td>
-                    <td class="nodok"><b>Jumlah Total</b></td>
-                    <td class="nodok"></td>
-                    <td style="text-align: center" class="nodok"></td>
-                    <td style="text-align: center" class="nodok"></td>
-                    <td class="nodok"></td>
-                    <td class="nodok"><b><?php
-                                            $query_sum = mysqli_query($connect, "SELECT SUM(total_harga) AS totalsum FROM tbl_pengajuan WHERE id_judul = $id_judul");
-
-                                            $sum = mysqli_fetch_assoc($query_sum);
-                                            $sum = $sum['totalsum'];
-                                            echo rupiah($sum);
-
-                                            ?></b></td>
-                    <td class="nodok"></td>
-                    <td class="nodok"></td>
-                </tr>
             </tbody>
         </table>
     </div>
     <div style="font-size: 13px; margin-left: 28px; position: absolute">
-        <p>Mengetahui,<br />Waka Sarana</p>
-        <br /><br /><br />
-        <b><u><?= $fetch['nama_sarpras'] ?></u></b><br />
-        NIP. <?= $fetch['nip_sarpras'] ?>
-    </div>
-    <div style="font-size: 13px; margin-left: 540px">
-        <p>Malang,<br />Yang Mengajukan</p>
+        <p>Malang,<br />Kepala Bengkel</p>
         <br /><br /><br />
         <b><u><?= $fetch['nama_kabeng'] ?></u></b><br />
         NIP. <?= $fetch['nip_kabeng'] ?>
-    </div>
-    <div style="font-size: 13px; text-align: center">
-        <p>Menyetujui</p>
-        <br /><br /><br />
-        <b><u><?= $fetch['nama_kepsek'] ?></u></b><br />
-        NIP. <?= $fetch['nip_kepsek'] ?>
     </div>
 </body>
 <style>
@@ -213,6 +150,7 @@ ob_start();
     }
 
     .nodok {
+        padding: 12px;
         border: 1px solid black;
         border-collapse: collapse;
     }
@@ -227,6 +165,7 @@ ob_start();
     }
 
     thead {
+        padding: 20px;
         background-color: #c0c0c0;
     }
 </style>

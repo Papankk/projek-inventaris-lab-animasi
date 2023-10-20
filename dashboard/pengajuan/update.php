@@ -14,7 +14,7 @@ if ($queryupdate) {
     $_SESSION['title'] = "Sukses!";
     $_SESSION['text'] = "Data berhasil diedit!";
 
-    $_SESSION['aktivitas'] = "Edit data <b>$judul</b> di tabel <b>Pengajuan<b>";
+    $_SESSION['aktivitas'] = "Edit data pengajuan <b>$judul</b> di tabel <b>Pengajuan<b>";
     date_default_timezone_set("Asia/Jakarta");
     $_SESSION['waktu'] = date("Y-F-d H:i:s");
     $_SESSION['location'] = "pengajuan/";

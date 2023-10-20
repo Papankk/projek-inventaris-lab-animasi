@@ -240,6 +240,7 @@ if ($_SESSION['logged_in']) {
                                     <button id="tombol" type="button" class="mb-4 btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#insertModalLong">
                                         <i class="bx bx-plus"></i> Insert
                                     </button>
+                                    <a href="cetak.php" target="_blank" class="mb-4 btn btn-success btn-sm"><i class="bx bx-printer"></i> Print</a>
 
                                     <?php
                                     if (isset($_SESSION['text'])) :

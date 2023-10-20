@@ -1,4 +1,5 @@
 <?php
+
 $no = 1;
 include "../../koneksi.php";
 session_start();
@@ -8,14 +9,15 @@ $username = $_SESSION['username'];
 $result = mysqli_query($connect, "SELECT * FROM tbl_user WHERE username = '$username'");
 $data = mysqli_fetch_assoc($result);
 
+if ($data['role'] == "0") {
+    header("location: ../../404.html");
+}
+
 $id_judul = $_GET['id'];
 
 $query = mysqli_query($connect, "SELECT * FROM tbl_jdl_pengajuan WHERE id_judul = $id_judul");
 $row = mysqli_fetch_assoc($query);
 
-if ($data['role'] == "0") {
-    header("location: ../../404.html");
-}
 
 if ($_SESSION['logged_in']) {
 ?>
@@ -90,7 +92,21 @@ if ($_SESSION['logged_in']) {
                                 <div data-i18n="Analytics">Dashboard</div>
                             </a>
                         </li>
-
+                        <li class="menu-header small text-uppercase">
+                            <span class="menu-header-text">Data Bahan</span>
+                        </li>
+                        <li class="menu-item">
+                            <a href="../bahan/" class="menu-link">
+                                <i class="menu-icon tf-icons bx bx-package"></i>
+                                <div data-i18n="Basic">Bahan</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="../distribusi-bahan/" class="menu-link">
+                                <i class="menu-icon tf-icons bx bx-transfer-alt"></i>
+                                <div data-i18n="Basic">Distribusi Bahan</div>
+                            </a>
+                        </li>
                         <li class="menu-header small text-uppercase">
                             <span class="menu-header-text">Data Barang</span>
                         </li>

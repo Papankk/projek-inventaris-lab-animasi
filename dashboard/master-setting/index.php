@@ -272,7 +272,7 @@ if ($_SESSION['logged_in']) {
                                         <div class="card">
                                             <div class="p-3">
                                                 <div class="row">
-                                                    <div class="col-12 col-lg-6">
+                                                    <div class="col-12 col-lg-6 mb-3">
                                                         <div class="col-auto">
                                                             <label for="inputtext6" class="col-form-label">Nama Waka Sarana</label>
                                                         </div>
@@ -286,7 +286,7 @@ if ($_SESSION['logged_in']) {
                                                             <input type="text" name="nip_sarpras" id="inputtext6" class="form-control" aria-describedby="textHelpInline" value="<?= $fetch['nip_sarpras'] ?>">
                                                         </div>
                                                     </div>
-                                                    <div class="col-12 col-lg-6">
+                                                    <div class="col-12 col-lg-6 mb-3">
                                                         <div class="col-auto">
                                                             <label for="inputtext6" class="col-form-label">Nama Kepala Sekolah</label>
                                                         </div>
@@ -299,6 +299,28 @@ if ($_SESSION['logged_in']) {
                                                         <div class="col-auto">
                                                             <input type="text" name="nip_kepsek" id="inputtext6" class="form-control" aria-describedby="textHelpInline" value="<?= $fetch['nip_sarpras'] ?>">
                                                         </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col">
+
+                                                    </div>
+                                                    <div class="col-12 col-lg-6">
+                                                        <div class="col-auto">
+                                                            <label for="inputtext6" class="col-form-label">Nama Kepala Bengkel</label>
+                                                        </div>
+                                                        <div class="col-auto">
+                                                            <input type="text" name="nama_kabeng" id="inputtext6" class="form-control" aria-describedby="textHelpInline" value="<?= $fetch['nama_kabeng'] ?>">
+                                                        </div>
+                                                        <div class="col-auto">
+                                                            <label for="inputtext6" class="col-form-label">NIP</label>
+                                                        </div>
+                                                        <div class="col-auto">
+                                                            <input type="text" name="nip_kabeng" id="inputtext6" class="form-control" aria-describedby="textHelpInline" value="<?= $fetch['nip_kabeng'] ?>">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col">
+
                                                     </div>
                                                 </div>
                                             </div>

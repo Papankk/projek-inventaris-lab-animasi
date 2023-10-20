@@ -29,7 +29,3 @@ if (isset($_POST["submitinsert"])) {
         $_SESSION['pesan'] = "Terjadi kesalahan saat menyimpan data: " . mysqli_error($connect);
     }
 }
-
-// Redirect ke halaman utama setelah INSERT atau setelah kesalahan
-header("Location: index.php");
-exit();
